@@ -1,0 +1,46 @@
+
+class Solution:
+    def marge(self,a,b):
+        if a == None:
+            return b
+        if b == None:
+            return a
+
+        c = ListNode(1)
+        tempC = c
+        while(a != None and b != None):
+            if a.val < b.val:
+                tempC.next = a
+                a = a.next
+            else:
+                tempC.next = b
+                b = b.next
+            tempC = tempC.next
+            
+        if a != None:
+            tempC.next = a
+        else:
+            tempC.next = b
+
+        return c.next
+    
+    def sortList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        if head is None or head.next is None:
+            return head
+
+        slow = head
+        fast = head
+        a = head
+        
+        while(fast!=None and fast.next!=None and fast.next.next):
+            slow = slow.next
+            fast = fast.next.next
+
+        b = slow.next
+        slow.next = None
+        a = self.sortList(a)
+        b = self.sortList(b)
+        c = self.marge(a,b)
+
+        return c
